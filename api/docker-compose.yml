@@ -1,0 +1,12 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: postgresdb
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: docker123
+      POSTGRES_USER: postgres
+      POSTGRES_DB: mcovid19
+    ports:
+      - '5432:5432'
