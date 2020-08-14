@@ -3,7 +3,7 @@ import {Request, Response} from 'express';
 import CreateANewMeasurementService from '@modules/measurements/services/CreateANewMeasurementService';
 
 interface IMeasurement{
-    
+  
 }
 
 export default class MeasurementControllers{
@@ -11,12 +11,15 @@ export default class MeasurementControllers{
     async create(request: Request, response: Response): Promise<Response>{
 
         const {
-            patient_id,
-            station_id,
+            patientId,
+            stationId,
             measurements
         } = request.body;
 
-        const createANewMeasurementService = new CreateANewMeasurementService();
+        const createANewMeasurementService = new CreateANewMeasurementService(patientId,
+          stationId,measurements
+          );
+        await createANewMeasurementService.run();
 
         //identificar se o patiente existe
 
@@ -25,7 +28,7 @@ export default class MeasurementControllers{
         try {
             const trx = await knex.transaction();
             //identificar se o nó existe e se está ativo.
-            const selectedNode = await trx('node').where(node).select('id', 'active').first();
+
 
             if (selectedNode == null) {
                 return response.json({ error: "node not registered." })
@@ -43,7 +46,7 @@ export default class MeasurementControllers{
 
 
             //insert clinical mensuaraments in database
-            // // select the mensuarament_type_id correct 
+            // // select the mensuarament_type_id correct
             const selectedMeasurement_type = await knex('measurement_type').select('measurement_type', 'id');
             const measurement_types = selectedMeasurement_type.map((m) => ({
                 id: m.id,
@@ -55,7 +58,7 @@ export default class MeasurementControllers{
                 (m) => measurement_types.filter(
                     (m_type) => m_type.id == m.type_id)
                     .length == 1);
-            //error of type 
+            //error of type
             const errorTypeMensurement = ArrayOfMeasurement.filter(
                 (m) =>
                     measurement_types.filter(
@@ -76,7 +79,7 @@ export default class MeasurementControllers{
                 measurement_type_id: m.type_id
             }));
             const insertedids = await trx('clinical_signals_measurements').insert(clinicalSignalsMeasurements);
-            
+
             trx.commit();
 
             responseJson.success.push({
@@ -89,28 +92,28 @@ export default class MeasurementControllers{
             const responseJson = { "OK": false };
             return response.json(responseJson);
         }
-        
+
     }
 }
 
 / {
     // 	"patient_id" : 1,
     // 	"station_id": 2,
-    // 	"measurements": 
+    // 	"measurements":
     // 	[
     // 		{
     // 			"measurement": 400,
     // 			"type_id": 1,
     // 			"type_name": "Temperatura",
     // 			"date" : "2020-02-26T10:37:34.768Z",
-    // 			"timestamp": 1593454768	
+    // 			"timestamp": 1593454768
     // 	},
     // 			{
     // 			"measurement": 400,
     // 			"type_id": 1,
     // 			"type_name": "Temperatura",
     // 			"date" : "2020-02-26T10:37:34.768Z",
-    // 			"timestamp": 1593454768	
+    // 			"timestamp": 1593454768
     // 			}
-    
+
     // ]
