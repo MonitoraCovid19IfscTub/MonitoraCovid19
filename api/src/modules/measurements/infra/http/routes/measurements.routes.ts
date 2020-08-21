@@ -2,6 +2,6 @@ import express from 'express';
 
 const measurementsRouter = express.Router();
 
-measurementsRouter.post('/') ;
+measurementsRouter.post('/');
 
 export default measurementsRouter;

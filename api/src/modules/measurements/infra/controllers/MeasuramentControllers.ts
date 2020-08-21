@@ -3,7 +3,7 @@ import {Request, Response} from 'express';
 import CreateANewMeasurementService from '@modules/measurements/services/CreateANewMeasurementService';
 
 interface IMeasurement{
-  
+
 }
 
 export default class MeasurementControllers{
@@ -96,7 +96,7 @@ export default class MeasurementControllers{
     }
 }
 
-/ {
+//{
     // 	"patient_id" : 1,
     // 	"station_id": 2,
     // 	"measurements":

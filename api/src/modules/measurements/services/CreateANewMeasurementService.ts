@@ -18,10 +18,11 @@ export default class CreateANewMeasurementService {
   }
 
   async run(): Promise<void> {
+    const selectedNode = await trx('node')
+      .where(node)
+      .select('id', 'active')
+      .first();
 
-    const selectedNode = await trx('node').where(node).select('id', 'active').first();
-
-    const station =  stationRepository.findById(stationId);
-
+    const station = stationRepository.findById(stationId);
   }
 }
