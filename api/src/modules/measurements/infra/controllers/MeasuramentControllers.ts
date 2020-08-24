@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateANewMeasurementService from '@modules/measurements/services/CreateANewMeasurementService';
+import StationIsActive from '@modules/station/services/StationIsActive';
 
 interface IMeasurement {}
 
@@ -8,9 +9,13 @@ export default class MeasurementControllers {
     const { patientId, stationId, measurements } = request.body;
 
     // identificar se a Estação  existe e se está ativo.
+    const stationIsActiveService = new StationIsActive(stationId);
 
+    if(stationIsActiveService.run()){
+        response.status(400).send({error: "Station not is Active"});
+    }
     // caso sim continue senão retorne erro
-
+ 
     // identificar se o patiente existe
 
     // Caso não existir retorna erro caso sim continue

@@ -17,5 +17,9 @@ export default class CreateANewMeasurementService {
     this.stationId = stationId;
   }
 
-  async run(): Promise<void> {}
+  async run(): Promise<void> {
+    // pega o tipo no banco 
+
+    //utilizar o repository create ;
+  }
 }
