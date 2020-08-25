@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('measurementType')
-export default class Measurement {
+export default class MeasurementType {
   @PrimaryGeneratedColumn('rowid')
   id: number;
 

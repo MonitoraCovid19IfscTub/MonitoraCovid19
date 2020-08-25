@@ -11,7 +11,7 @@ export default class MeasurementsRepository implements IMeasurementsRepository {
   }
 
   create({
-    measurement,
+    value,
     patientId,
     registeredAt,
     stationId,
@@ -20,7 +20,7 @@ export default class MeasurementsRepository implements IMeasurementsRepository {
     const entityMeasurement = new Measurement();
 
     Object.assign(entityMeasurement, {
-      measurement,
+      measurement: value,
       patientId,
       registeredAt,
       stationId,

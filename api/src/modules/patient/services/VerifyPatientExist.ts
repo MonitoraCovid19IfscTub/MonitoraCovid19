@@ -16,7 +16,6 @@ export default class VerifyPatientExist {
 
 	async run(): Promise<boolean> {
 		const patient = this.patientRepository.findById(this.patientId);
-
 		return patient ? true : false;
 	}
 }

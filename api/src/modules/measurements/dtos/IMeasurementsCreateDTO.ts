@@ -3,5 +3,5 @@ export default interface IMeasurementsCreateDTO {
   registeredAt: Date;
   stationId: string;
   patientId: string;
-  typeId: string;
+  typeId: number;
 }
