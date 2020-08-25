@@ -6,19 +6,20 @@ import VerifyPatientExist from '@modules/patient/services/VerifyPatientExist';
 export default class MeasurementControllers {
   async create(request: Request, response: Response): Promise<Response> {
     const { patientId, stationId, measurement } = request.body;
-
+    console.log(stationId);
     // identificar se a Estação  existe e se está ativo.
     try {
       const stationIsActiveService = new StationIsActive(stationId);
+      const stationIsActive = await stationIsActiveService.run();
 
-      if (stationIsActiveService.run()) {
-        response.status(400).send({ error: 'Station not Active' });
+      if (!stationIsActive) {
+        return response.status(400).send({ error: 'Station not Active' });
       }
 
       // identificar se o patiente existe
       const verifyPaitientExist = new VerifyPatientExist(patientId);
-      if (verifyPaitientExist.run()) {
-        response.status(400).send({ error: 'Patient not exist' });
+      if (await verifyPaitientExist.run()) {
+        return response.status(400).send({ error: 'Patient not exist' });
       }
 
       // Caso não existir retorna erro caso sim continue

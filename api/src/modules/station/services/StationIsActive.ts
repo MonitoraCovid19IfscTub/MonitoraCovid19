@@ -2,21 +2,23 @@ import IStationRepository from '../repository/IStationRepository';
 import StationRepository from '../infra/typeorm/repositories/StationRepository';
 
 export default class StationIsActive {
-  private stationRepository : IStationRepository;
-  private stationId : string;
+  private stationRepository: IStationRepository;
 
-  constructor(stationId : string) {
+  private stationId: string;
+
+  constructor(stationId: string) {
     this.stationRepository = new StationRepository();
     this.stationId = stationId;
   }
 
-  async run(): Promise<Boolean>{
-
+  async run(): Promise<boolean> {
     const station = await this.stationRepository.findById(this.stationId);
-    
-    if(!station){
+    console.log(station);
+
+    if (!station) {
       return false;
     }
-    return new Boolean(station.active);
+
+    return !!station.active;
   }
 }
