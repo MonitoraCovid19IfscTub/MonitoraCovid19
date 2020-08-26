@@ -1,7 +1,10 @@
+import Station from '@modules/station/infra/typeorm/entities/Station';
+import Patient from '@modules/patient/infra/typeorm/entities/Patient';
+
 export default interface IMeasurementsCreateDTO {
-  measurement: number;
+  value: number;
   registeredAt: Date;
-  stationId: string;
-  patientId: string;
+  stationId: Station;
+  patientId: Patient;
   typeId: number;
 }

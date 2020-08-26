@@ -1,68 +1,66 @@
-import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-  } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import Measurement from '@modules/measurements/infra/typeorm/entities/Measurement';
 
 @Entity('patient')
-export default class Patient{
+export default class Patient {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-	@PrimaryGeneratedColumn('uuid')
-	id: string;
+  @Column({ nullable: true })
+  name: string;
 
-	@Column()
-	name: string;
+  @Column({ nullable: true })
+  email: string;
 
-	@Column()
-	email: string;
+  @Column({ nullable: true })
+  password: string;
 
-	@Column()
-	password: string;
+  @Column({ nullable: true })
+  birthDate: Date;
 
-	@Column()
-	birthDate: Date;
+  @Column({ nullable: true })
+  contact: string;
 
-	@Column()
-	contact: string;
+  @Column({ nullable: true })
+  address: string;
 
-	@Column()
-	address: string;
+  @Column({ nullable: true })
+  addressNumber: number;
 
-	@Column()
-	addressNumber: number;
+  @Column({ nullable: true })
+  addressComplement: string;
 
-	@Column()
-	addressComplement: string;
+  @Column({ nullable: true })
+  postalCode: string;
 
-	@Column()
-	postalCode: string;
+  @Column({ type: 'timestamp', nullable: true })
+  monitoringStart: Date;
 
-	@Column('timestamp')
-	monitoringStart: Date;
-	
-	@Column()
-	accompanyingPerson: string;
+  @Column({ nullable: true })
+  accompanyingPerson: string;
 
-	@Column()
-	accompanyingContact: string;
+  @Column({ nullable: true })
+  accompanyingContact: string;
 
-	@Column()
-	active: boolean;
+  @Column({ nullable: true })
+  active: boolean;
 
-	@Column()
-	professionalId: number;
+  @Column({ nullable: true })
+  professionalId: number;
 
-	@Column()
-	neighborhood: string;
+  @Column({ nullable: true })
+  neighborhood: string;
 
-	@Column()
-	city: string;
+  @Column({ nullable: true })
+  city: string;
 
-	@Column()
-	state: string;
+  @Column({ nullable: true })
+  state: string;
 
-	@Column()
+  @Column({ nullable: true })
   country: string;
-    
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @OneToMany(type => Measurement, measurement => measurement.patientId)
+  measurements: Measurement[];
 }

@@ -12,18 +12,17 @@ export default class MeasurementsRepository implements IMeasurementsRepository {
 
   create({
     value,
-    patientId,
+    patient,
     registeredAt,
-    stationId,
+    station,
     typeId,
   }: IMeasurementCreateDTO): Promise<Measurement> {
     const entityMeasurement = new Measurement();
-
     Object.assign(entityMeasurement, {
       measurement: value,
-      patientId,
+      patient,
       registeredAt,
-      stationId,
+      station,
       typeId,
     });
 

@@ -18,7 +18,8 @@ export default class MeasurementControllers {
 
       // identificar se o patiente existe
       const verifyPaitientExist = new VerifyPatientExist(patientId);
-      if (await verifyPaitientExist.run()) {
+      const patientExist = await verifyPaitientExist.run();
+      if (!patientExist) {
         return response.status(400).send({ error: 'Patient not exist' });
       }
 
@@ -52,4 +53,3 @@ export default class MeasurementControllers {
 // 			"timestamp": 1593454768
 // 	}
 // }
-//

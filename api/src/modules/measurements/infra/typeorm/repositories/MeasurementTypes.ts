@@ -1,4 +1,4 @@
-import IMeasurementTypesRepository from '@modules/measurements/repositories/MeasurementTypesRepository';
+import IMeasurementTypesRepository from '@modules/measurements/repositories/IMeasurementTypesRepository';
 import { getRepository, Repository } from 'typeorm';
 import MeasurementType from '../entities/MeasurementType';
 

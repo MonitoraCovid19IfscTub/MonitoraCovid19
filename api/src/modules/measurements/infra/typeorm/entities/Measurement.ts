@@ -3,7 +3,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import Patient from '@modules/patient/infra/typeorm/entities/Patient';
+import Station from '@modules/station/infra/typeorm/entities/Station';
 
 @Entity('measurements')
 export default class Measurement {
@@ -13,11 +16,13 @@ export default class Measurement {
   @Column()
   measurement: number;
 
-  @Column()
-  stationId: string;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @ManyToOne(type => Station, stationId => stationId.id, {})
+  station: Station;
 
-  @Column()
-  patientId: string;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @ManyToOne(type => Patient, patientId => patientId.measurements, {})
+  patient: Patient;
 
   @Column()
   typeId: number;
