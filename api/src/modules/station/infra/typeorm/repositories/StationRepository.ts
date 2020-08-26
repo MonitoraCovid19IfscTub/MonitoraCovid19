@@ -1,5 +1,5 @@
 import { Repository, getRepository } from 'typeorm';
-import IStationRepository from '@modules/station/repository/IStationRepository';
+import IStationRepository from '@modules/station/repositories/IStationRepository';
 import Station from '../entities/Station';
 
 export default class StationRepository implements IStationRepository {

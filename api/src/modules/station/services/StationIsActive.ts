@@ -1,4 +1,4 @@
-import IStationRepository from '../repository/IStationRepository';
+import IStationRepository from '../repositories/IStationRepository';
 import StationRepository from '../infra/typeorm/repositories/StationRepository';
 
 export default class StationIsActive {
