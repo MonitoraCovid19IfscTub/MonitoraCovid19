@@ -13,7 +13,6 @@ export default class StationIsActive {
 
   async run(): Promise<boolean> {
     const station = await this.stationRepository.findById(this.stationId);
-    console.log(station);
 
     if (!station) {
       return false;

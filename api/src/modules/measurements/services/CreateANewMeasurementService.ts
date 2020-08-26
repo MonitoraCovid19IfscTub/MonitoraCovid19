@@ -1,7 +1,5 @@
 import IMeasurementCreateDTO from '@modules/measurements/dtos/IMeasurementsCreateDTO';
 import StationRepository from '@modules/station/infra/typeorm/repositories/StationRepository';
-import Station from '@modules/station/infra/typeorm/entities/Station';
-import Patient from '@modeles/patient/infra/typeorm/entities/Patient';
 import IPatientRepository from '@modules/patient/repositories/IPatientRepository';
 import IStationRepository from '@modules/station/repository/IStationRepository';
 import PatientRepository from '@modules/patient/infra/typeorm/repositories/PatientRepository';

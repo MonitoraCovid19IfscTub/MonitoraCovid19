@@ -61,6 +61,6 @@ export default class Patient {
   country: string;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @OneToMany(type => Measurement, measurement => measurement.patientId)
+  @OneToMany(type => Measurement, measurement => measurement.patient)
   measurements: Measurement[];
 }
