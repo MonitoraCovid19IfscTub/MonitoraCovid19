@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
-export default class PatientControllers {
+export default class PatientController {
   async create(request: Request, response: Response) {
-    return response.status(503).send();
+    /// profissional auteenticado
+   /// const {professionalId} = response.professionalId;
   }
 }
