@@ -4,29 +4,31 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
+  ManyToOne,
 } from 'typeorm';
+import ProfileType from './ProfileType';
 
 @Entity('profile')
 export default class Profile {
-
   @PrimaryGeneratedColumn('uuid')
-  id : string;
+  id: string;
 
   @Column()
-  email:string;
+  email: string;
 
   @Column()
-  password: string
+  password: string;
 
   @Column()
-  contact : string;
+  contact: string;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @ManyToOne(type => ProfileType)
+  type: ProfileType;
 
   @CreateDateColumn()
-  creatAt : Date;
+  creatAt: Date;
 
   @UpdateDateColumn()
-  updateAt :Date;
-
+  updateAt: Date;
 }
-
