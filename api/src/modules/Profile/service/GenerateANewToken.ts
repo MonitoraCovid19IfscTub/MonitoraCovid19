@@ -1,22 +1,25 @@
+import jwt from 'jsonwebtoken';
+import { secret } from '@config/config.json';
 
-import jwt from 'jsonwebtoken'
-import {secret} from '@config/config.json'
-
+export interface CodedParams {
+  profileId: string;
+  professionalId?: string;
+  patientId?: string;
+}
 export default class GenerateANewToken {
+  private expireIn: number;
 
-  private expireIn : number;
-  private params : object;
+  private params: CodedParams;
 
-  constructor(params : object){
-
-    const THIRTY_DAYS  = 2592000;
+  constructor(params: CodedParams) {
+    const THIRTY_DAYS = 2592000;
     this.expireIn = THIRTY_DAYS;
     this.params = params;
   }
 
-  async run(){
-    return jwt.sign(this.params,secret,{
-      expiresIn : this.expireIn
-    })
+  async run(): Promise<string> {
+    return jwt.sign(this.params, secret, {
+      expiresIn: this.expireIn,
+    });
   }
 }
