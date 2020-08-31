@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { RequestParams } from '@shared/@types/expressExtendTypes';
 import { secret } from '@config/config.json';
 
-import {} from ''
+import { CodedParams } from '@modules/Profile/service/GenerateANewToken';
 
 const authenticationProfile = (
   request: RequestParams,
@@ -28,16 +28,14 @@ const authenticationProfile = (
     response.status(401).send({ error: 'Token malformed' });
   }
 
-  jwt.verify(token, secret, (err, decoded) => {
+  jwt.verify(token, secret, (err, decoded: CodedParams) => {
     if (err) {
       response.status(401).send({ error: 'Token invalid' });
       return;
     }
-    const {profileId,professionalId,patientId} = decoded;
+    const { profileId } = decoded;
 
     request.profileId = profileId;
-    request.professionalId = professionalId;
-    request.patientId = patientId;
 
     next();
   });

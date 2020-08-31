@@ -3,8 +3,7 @@ import { secret } from '@config/config.json';
 
 export interface CodedParams {
   profileId: string;
-  professionalId?: string;
-  patientId?: string;
+  type: string;
 }
 export default class GenerateANewToken {
   private expireIn: number;

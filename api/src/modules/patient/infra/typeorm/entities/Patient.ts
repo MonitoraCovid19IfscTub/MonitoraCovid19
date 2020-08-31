@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import Measurement from '@modules/measurements/infra/typeorm/entities/Measurement';
 import Profile from '@modules/Profile/infra/typeorm/entities/Profile';
 
@@ -9,12 +16,6 @@ export default class Patient {
 
   @Column({ nullable: true })
   name: string;
-
-  @Column({ nullable: true })
-  email: string;
-
-  @Column({ nullable: true })
-  password: string;
 
   @Column({ nullable: true })
   birthDate: Date;
@@ -59,12 +60,13 @@ export default class Patient {
   state: string;
 
   @Column({ nullable: true })
-
-  @OneToOne(type => Profile,{
-    cascade: true
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @OneToOne(type => Profile, {
+    cascade: true,
   })
   @JoinColumn()
-  perfil: Profile;
+  profile: Profile;
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @OneToMany(type => Measurement, measurement => measurement.patient)
   measurements: Measurement[];

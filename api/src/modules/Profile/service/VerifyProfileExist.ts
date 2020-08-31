@@ -12,7 +12,9 @@ export default class VerifyProfileExist {
   }
 
   async run(): Promise<boolean> {
-    const profile = await this.profileRepository.findById(this.profileId);
+    const profile = await this.profileRepository.findProfileAndTypeProfileById(
+      this.profileId,
+    );
 
     if (!profile) {
       return false;

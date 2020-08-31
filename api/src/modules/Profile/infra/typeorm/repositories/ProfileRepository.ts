@@ -1,5 +1,6 @@
 import { Repository, getRepository } from 'typeorm';
-import IProfileRepository from '@modules/profile/repositories/IProfileRepository';
+
+import IProfileRepository from '@modules/Profile/repositories/IProfileRepository';
 import Profile from '../entities/Profile';
 
 export default class ProfileRepository implements IProfileRepository {
@@ -9,7 +10,17 @@ export default class ProfileRepository implements IProfileRepository {
     this.repository = getRepository(Profile);
   }
 
-  findById(profileId: string): Promise<Profile> {
-    return this.repository.findOne(profileId);
+  findProfileAndTypeProfileById(profileId: string): Promise<Profile> {
+    return this.repository.findOne(profileId, {
+      relations: ['type'],
+    });
+  }
+
+  findProfileByEmail(email: string): Promise<Profile> {
+    return this.repository
+      .createQueryBuilder('profile')
+      .addSelect('password')
+      .where('profile.email = :email', { email })
+      .getOne();
   }
 }

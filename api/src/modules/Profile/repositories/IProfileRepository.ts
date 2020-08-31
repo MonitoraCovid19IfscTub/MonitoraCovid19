@@ -1,5 +1,6 @@
 import Profile from '../infra/typeorm/entities/Profile';
 
 export default interface IProfileRepository {
-  findById(profileId: string): Promise<Profile>;
+  findProfileAndTypeProfileById(profileId: string): Promise<Profile>;
+  findProfileByEmail(email: string): Promise<Profile>;
 }
