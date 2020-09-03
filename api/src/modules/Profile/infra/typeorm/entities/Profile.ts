@@ -6,8 +6,18 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
+import bcrypt from 'bcrypt';
 import ProfileType from './ProfileType';
 
+const encryptPassword = {
+  from(value: string): string {
+    return value;
+  },
+  to(value: string): string {
+    const hash = bcrypt.hashSync(value, 20);
+    return hash;
+  },
+};
 @Entity('profile')
 export default class Profile {
   @PrimaryGeneratedColumn('uuid')
@@ -16,7 +26,7 @@ export default class Profile {
   @Column()
   email: string;
 
-  @Column({ select: false })
+  @Column({ select: false, transformer: [encryptPassword] })
   password: string;
 
   @Column()
@@ -27,7 +37,7 @@ export default class Profile {
   type: ProfileType;
 
   @CreateDateColumn()
-  creatAt: Date;
+  createAt: Date;
 
   @UpdateDateColumn()
   updateAt: Date;

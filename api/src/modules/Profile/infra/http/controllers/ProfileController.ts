@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import GenerateANewToken from '@modules/Profile/service/GenerateANewToken';
 import ProfileLogin from '@modules/Profile/service/ProfileLogin';
+import IProfileTypeRepository from '@modules/Profile/repositories/IProfiletypeRepository';
+import Professional from '@modules/professional/infra/typeorm/entities/Professional';
+import ProfessionalRepository from '@modules/professional/infra/typeorm/repositories/ProfessionalRepository';
+import ProfileTypeRepository from '../../typeorm/repositories/ProfiletypeRepository';
+import Profile from '../../typeorm/entities/Profile';
 
 export default class ProfileController {
   async login(request: Request, response: Response): Promise<Response> {
@@ -8,9 +13,11 @@ export default class ProfileController {
     try {
       /// criar um service que retorna Profile
       const profileLogin = new ProfileLogin(email, password);
-      const profile = await profileLogin.run();
-      if (!profile) {
-        return response.status(400).send({ error: 'invalid password' });
+      const user = await profileLogin.run();
+      if (!user) {
+        return response
+          .status(400)
+          .send({ error: 'invalid password or email' });
       }
       /**
        * ProfileID
@@ -26,14 +33,37 @@ export default class ProfileController {
        */
 
       const generateToken = new GenerateANewToken({
-        profileId: profile.profile.id,
-        profile,
+        profileId: user.profile.id,
       });
       const token = await generateToken.run();
 
-      return response.status(200).send({ profile, token });
+      return response.status(200).send({ user, token });
     } catch (err) {
       return response.status(400).send({ err });
     }
+  }
+
+  async create(request: Request, response: Response): Promise<Response> {
+    const { email, password, contact } = request.body;
+
+    try {
+      const profileTypeRepository: IProfileTypeRepository = new ProfileTypeRepository();
+      const profileType = await profileTypeRepository.findTypeByName('patient');
+
+      const profile = new Profile();
+      profile.email = email;
+      profile.password = password;
+      profile.contact = contact;
+      profile.type = profileType;
+
+      const professional = new Professional();
+      professional.profile = profile;
+
+      const profileRepository = new ProfessionalRepository();
+      profileRepository.save(professional);
+    } catch (err) {
+      return response.status(400).send({ err });
+    }
+    return response.status(201).send();
   }
 }

@@ -1,8 +1,7 @@
-import { repository } from 'typeorm';
 import Profile from '@modules/Profile/infra/typeorm/entities/Profile';
-import Professional from '../infra/typeorm/entities/Professional';
-import IProfessionalRepository from '../repositories/IProfessionalRepository';
 import ProfessionalRepository from '../infra/typeorm/repositories/ProfessionalRepository';
+import IProfessionalRepository from '../repositories/IProfessionalRepository';
+import Professional from '../infra/typeorm/entities/Professional';
 
 export default class ReturnProfessionalByProfileService {
   private profile: Profile;
@@ -15,5 +14,7 @@ export default class ReturnProfessionalByProfileService {
     this.repository = new ProfessionalRepository();
   }
 
-  async run(): Promise<Professional> {}
+  async run(): Promise<Professional> {
+    return this.repository.findByProfileAndReturnRelations(this.profile);
+  }
 }

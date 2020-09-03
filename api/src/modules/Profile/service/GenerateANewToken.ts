@@ -3,7 +3,6 @@ import { secret } from '@config/config.json';
 
 export interface CodedParams {
   profileId: string;
-  type: string;
 }
 export default class GenerateANewToken {
   private expireIn: number;

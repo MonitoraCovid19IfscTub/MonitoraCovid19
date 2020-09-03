@@ -21,13 +21,15 @@ export default class ProfileLogin {
 
   async run(): Promise<Patient | Professional> {
     const profile = await this.profileRepository.findProfileByEmail(this.email);
-
+    if (!profile) {
+      return null;
+    }
     if (!(await bcrypt.compare(this.password, profile.password))) {
       return null;
     }
 
     if (profile.type.name === 'patient') {
-      // retornar o professional
+      // retornar o paciente
       const returnPatientByProfileService = new ReturnPatientByProfileService(
         profile,
       );
@@ -41,7 +43,7 @@ export default class ProfileLogin {
       const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(
         profile,
       );
-      const professional = returnProfessionalByProfileService.run();
+      const professional = await returnProfessionalByProfileService.run();
       professional.profile.password = undefined;
       return professional;
     }

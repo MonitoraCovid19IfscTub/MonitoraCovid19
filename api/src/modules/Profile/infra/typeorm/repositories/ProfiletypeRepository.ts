@@ -2,14 +2,14 @@ import IProfileTypeRepository from '@modules/Profile/repositories/IProfiletypeRe
 import { getRepository, Repository } from 'typeorm';
 import ProfileType from '../entities/ProfileType';
 
-export default class ProfileTypéRepository implements IProfileTypeRepository {
+export default class ProfileTypeRepository implements IProfileTypeRepository {
   private repository: Repository<ProfileType>;
 
   constructor() {
     this.repository = getRepository(ProfileType);
   }
 
-  findTypeById(typeId: string): Promise<ProfileType> {
-    return this.repository.findOne(typeId);
+  findTypeByName(name: string): Promise<ProfileType> {
+    return this.repository.findOne(name);
   }
 }
