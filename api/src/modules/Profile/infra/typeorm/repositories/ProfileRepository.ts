@@ -23,4 +23,7 @@ export default class ProfileRepository implements IProfileRepository {
       .where('profile.email = :email', { email })
       .getOne();
   }
+  save(profile: Profile): Promise<Profile> {
+    return this.repository.save(profile);
+  }
 }

@@ -6,6 +6,7 @@ import Professional from '@modules/professional/infra/typeorm/entities/Professio
 import ProfessionalRepository from '@modules/professional/infra/typeorm/repositories/ProfessionalRepository';
 import ProfileTypeRepository from '../../typeorm/repositories/ProfiletypeRepository';
 import Profile from '../../typeorm/entities/Profile';
+import ProfileRepository from '../../typeorm/repositories/ProfileRepository';
 
 export default class ProfileController {
   async login(request: Request, response: Response): Promise<Response> {
@@ -48,22 +49,27 @@ export default class ProfileController {
 
     try {
       const profileTypeRepository: IProfileTypeRepository = new ProfileTypeRepository();
-      const profileType = await profileTypeRepository.findTypeByName('patient');
+      const profileType = await profileTypeRepository.findTypeByName(
+        'Professional',
+      );
+      if (!profileType) {
+        throw new Error('profile type not exist');
+      }
+      console.log(profileType);
 
       const profile = new Profile();
       profile.email = email;
       profile.password = password;
       profile.contact = contact;
-      profile.type = profileType;
+      profile.profileType = profileType;
 
       const professional = new Professional();
       professional.profile = profile;
-
-      const profileRepository = new ProfessionalRepository();
-      profileRepository.save(professional);
+      const professionalRepository = new ProfessionalRepository();
+      professionalRepository.save(professional);
+      return response.status(201).send();
     } catch (err) {
-      return response.status(400).send({ err });
+      return response.status(500).send({ err });
     }
-    return response.status(201).send();
   }
 }

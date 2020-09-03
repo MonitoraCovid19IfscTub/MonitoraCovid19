@@ -33,8 +33,8 @@ export default class Profile {
   contact: string;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToOne(type => ProfileType)
-  type: ProfileType;
+  @ManyToOne(type => ProfileType, profileType => profileType.id)
+  profileType: ProfileType;
 
   @CreateDateColumn()
   createAt: Date;

@@ -10,6 +10,6 @@ export default class ProfileTypeRepository implements IProfileTypeRepository {
   }
 
   findTypeByName(name: string): Promise<ProfileType> {
-    return this.repository.findOne(name);
+    return this.repository.findOne({ name: name });
   }
 }

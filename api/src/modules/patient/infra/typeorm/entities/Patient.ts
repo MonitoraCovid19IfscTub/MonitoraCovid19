@@ -59,15 +59,15 @@ export default class Patient {
   @Column({ nullable: true })
   state: string;
 
-  @Column({ nullable: true })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @OneToOne(type => Profile, {
+  @Column()
+  profileId: string;
+
+  @OneToOne(() => Profile, {
     cascade: true,
   })
-  @JoinColumn()
+  @JoinColumn({ name: 'profileId' })
   profile: Profile;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @OneToMany(type => Measurement, measurement => measurement.patient)
   measurements: Measurement[];
 }
