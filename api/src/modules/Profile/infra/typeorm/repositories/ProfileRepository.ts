@@ -19,7 +19,8 @@ export default class ProfileRepository implements IProfileRepository {
   findProfileByEmail(email: string): Promise<Profile> {
     return this.repository
       .createQueryBuilder('profile')
-      .addSelect('password')
+      .addSelect('profile.password')
+      .leftJoinAndSelect('profile.profileType', 'profileType')
       .where('profile.email = :email', { email })
       .getOne();
   }

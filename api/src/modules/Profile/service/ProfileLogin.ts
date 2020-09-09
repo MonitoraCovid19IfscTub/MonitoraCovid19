@@ -20,34 +20,45 @@ export default class ProfileLogin {
   }
 
   async run(): Promise<Patient | Professional> {
-    const profile = await this.profileRepository.findProfileByEmail(this.email);
-    if (!profile) {
-      return null;
-    }
-    if (!(await bcrypt.compare(this.password, profile.password))) {
-      return null;
-    }
-
-    if (profile.type.name === 'patient') {
-      // retornar o paciente
-      const returnPatientByProfileService = new ReturnPatientByProfileService(
-        profile,
+    try {
+      const profile = await this.profileRepository.findProfileByEmail(
+        this.email,
       );
-      const patient = await returnPatientByProfileService.run();
-      patient.profile.password = undefined;
-      return patient;
-    }
-
-    if (profile.type.name === 'professional') {
-      // retornar o professional
-      const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(
-        profile,
+      if (!profile) {
+        return null;
+      }
+      console.log(this.password);
+      const passwordIsValid = await bcrypt.compare(
+        this.password,
+        profile.password,
       );
-      const professional = await returnProfessionalByProfileService.run();
-      professional.profile.password = undefined;
-      return professional;
-    }
+      if (!passwordIsValid) {
+        return null;
+      }
 
-    return null;
+      if (profile.profileType.name === 'Patient') {
+        // retornar o paciente
+        const returnPatientByProfileService = new ReturnPatientByProfileService(
+          profile,
+        );
+        const patient = await returnPatientByProfileService.run();
+        return patient;
+      }
+
+      if (profile.profileType.name === 'Professional') {
+        // retornar o professional
+        console.log('entrei aqui');
+        const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(
+          profile,
+        );
+        const professional = await returnProfessionalByProfileService.run();
+        console.log(professional);
+        return professional;
+      }
+
+      return null;
+    } catch (err) {
+      throw new Error('Login failed');
+    }
   }
 }

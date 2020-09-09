@@ -15,9 +15,11 @@ export default class ProfessionalRepository implements IProfessionalRepository {
   }
 
   findByProfileAndReturnRelations(profile: Profile): Promise<Professional> {
-    return this.repository.findOne(profile, {
-      relations: ['profile'],
-    });
+    return this.repository
+      .createQueryBuilder('professional')
+      .leftJoinAndSelect('professional.profile', 'profile')
+      .where('professional.profile = :profileId', { profileId: profile.id })
+      .getOne();
   }
 
   save(professional: Professional): Promise<Professional> {

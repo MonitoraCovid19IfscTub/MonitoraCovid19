@@ -15,8 +15,10 @@ export default class PatientRepository implements IPatientRepository {
   }
 
   findByProfileAndReturnRelations(profile: Profile): Promise<Patient> {
-    return this.repository.findOne(profile, {
-      relations: ['profile'],
-    });
+    return this.repository
+      .createQueryBuilder('patient')
+      .leftJoinAndSelect('patient.profile', 'profile')
+      .where('patient.profile = :profileId', { profileId: profile.id })
+      .getOne();
   }
 }

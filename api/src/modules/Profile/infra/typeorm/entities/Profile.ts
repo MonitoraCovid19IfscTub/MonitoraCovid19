@@ -14,7 +14,7 @@ const encryptPassword = {
     return value;
   },
   to(value: string): string {
-    const hash = bcrypt.hashSync(value, 20);
+    const hash = bcrypt.hashSync(value, 10);
     return hash;
   },
 };
@@ -23,7 +23,7 @@ export default class Profile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column({ select: false, transformer: [encryptPassword] })

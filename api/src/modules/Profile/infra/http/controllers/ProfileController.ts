@@ -20,6 +20,7 @@ export default class ProfileController {
           .status(400)
           .send({ error: 'invalid password or email' });
       }
+
       /**
        * ProfileID
        * nome
@@ -38,9 +39,12 @@ export default class ProfileController {
       });
       const token = await generateToken.run();
 
+      user.profile.id = undefined;
+      user.id = undefined;
+
       return response.status(200).send({ user, token });
     } catch (err) {
-      return response.status(400).send({ err });
+      return response.status(400).send({ error: err });
     }
   }
 
@@ -55,8 +59,6 @@ export default class ProfileController {
       if (!profileType) {
         throw new Error('profile type not exist');
       }
-      console.log(profileType);
-
       const profile = new Profile();
       profile.email = email;
       profile.password = password;
@@ -66,10 +68,12 @@ export default class ProfileController {
       const professional = new Professional();
       professional.profile = profile;
       const professionalRepository = new ProfessionalRepository();
-      professionalRepository.save(professional);
+      await professionalRepository.save(professional);
       return response.status(201).send();
     } catch (err) {
-      return response.status(500).send({ err });
+      return response
+        .status(500)
+        .send({ error: 'error in register, try again' });
     }
   }
 }
