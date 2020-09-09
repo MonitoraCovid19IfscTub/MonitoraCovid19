@@ -4,7 +4,7 @@ import StationIsActive from '@modules/station/services/StationIsActive';
 import VerifyPatientExist from '@modules/patient/services/VerifyPatientExist';
 
 export default class MeasurementControllers {
-  async create(request: Request, response: Response): Promise<Response> {
+  async create(requenst: Request, response: Response): Promise<Response> {
     const { patientId, stationId, measurement } = request.body;
 
     // identificar se a Estação  existe e se está ativo.
