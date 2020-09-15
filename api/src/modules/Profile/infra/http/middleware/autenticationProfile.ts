@@ -24,8 +24,9 @@ const authenticationProfile = (
   }
 
   const [schema, token] = parts;
-  if (/^Bearer$/i.test(schema)) {
+  if (!(/^Bearer$/i.test(schema))) {
     response.status(401).send({ error: 'Token malformed' });
+    return;
   }
 
   jwt.verify(token, secret, (err, decoded: CodedParams) => {

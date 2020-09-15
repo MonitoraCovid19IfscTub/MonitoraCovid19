@@ -20,8 +20,6 @@ export default class Patient {
   @Column({ nullable: true })
   birthDate: Date;
 
-  @Column({ nullable: true })
-  contact: string;
 
   @Column({ nullable: true })
   address: string;

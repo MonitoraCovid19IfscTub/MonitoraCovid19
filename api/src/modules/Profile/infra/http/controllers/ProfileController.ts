@@ -71,6 +71,7 @@ export default class ProfileController {
       await professionalRepository.save(professional);
       return response.status(201).send();
     } catch (err) {
+      console.log(err);
       return response
         .status(500)
         .send({ error: 'error in register, try again' });
