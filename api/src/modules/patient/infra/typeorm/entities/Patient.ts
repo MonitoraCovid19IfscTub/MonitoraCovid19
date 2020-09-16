@@ -4,10 +4,11 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   JoinColumn,
-  OneToOne,
+  OneToOne,ManyToMany
 } from 'typeorm';
 import Measurement from '@modules/measurements/infra/typeorm/entities/Measurement';
 import Profile from '@modules/Profile/infra/typeorm/entities/Profile';
+import Professional from '@modules/professional/infra/typeorm/entities/Professional';
 
 @Entity('patient')
 export default class Patient {
@@ -46,9 +47,6 @@ export default class Patient {
   active: boolean;
 
   @Column({ nullable: true })
-  professionalId: number;
-
-  @Column({ nullable: true })
   neighborhood: string;
 
   @Column({ nullable: true })
@@ -68,4 +66,7 @@ export default class Patient {
 
   @OneToMany(type => Measurement, measurement => measurement.patient)
   measurements: Measurement[];
+
+  @ManyToMany(type => Professional, professionals => professionals.patients,{nullable: false})
+  professionals: Professional[];
 }

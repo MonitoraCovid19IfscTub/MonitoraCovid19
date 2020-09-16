@@ -1,3 +1,4 @@
+import Professional from "@modules/professional/infra/typeorm/entities/Professional";
 import Profile from "@modules/Profile/infra/typeorm/entities/Profile";
 
 export default interface IPatientCreateDTO {
@@ -14,7 +15,7 @@ export default interface IPatientCreateDTO {
 
   monitoringStart: string;
 
-  professionalId: number;
+  professional: Professional;
 
   accompanying?:{
     name : string;
