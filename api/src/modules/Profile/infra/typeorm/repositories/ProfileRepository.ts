@@ -12,7 +12,7 @@ export default class ProfileRepository implements IProfileRepository {
 
   findProfileAndTypeProfileById(profileId: string): Promise<Profile> {
     return this.repository.findOne(profileId, {
-      relations: ['type'],
+      relations: ['profileType'],
     });
   }
 

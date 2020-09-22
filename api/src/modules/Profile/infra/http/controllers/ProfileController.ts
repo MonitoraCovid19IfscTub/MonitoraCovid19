@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+
 import GenerateANewToken from '@modules/Profile/service/GenerateANewToken';
 import ProfileLogin from '@modules/Profile/service/ProfileLogin';
 import IProfileTypeRepository from '@modules/Profile/repositories/IProfiletypeRepository';
@@ -7,9 +7,11 @@ import ProfessionalRepository from '@modules/professional/infra/typeorm/reposito
 import ProfileTypeRepository from '../../typeorm/repositories/ProfiletypeRepository';
 import Profile from '../../typeorm/entities/Profile';
 import ProfileRepository from '../../typeorm/repositories/ProfileRepository';
+import { Request, Response } from 'express';
+import RequestParams from '@shared/@types/expressExtendTypes';
 
 export default class ProfileController {
-  async login(request: Request, response: Response): Promise<Response> {
+  async login(request: RequestParams, response: Response): Promise<Response> {
     const { email, password } = request.body;
     try {
       /// criar um service que retorna Profile
@@ -71,6 +73,7 @@ export default class ProfileController {
       await professionalRepository.save(professional);
       return response.status(201).send();
     } catch (err) {
+      console.log(err);
       return response
         .status(500)
         .send({ error: 'error in register, try again' });

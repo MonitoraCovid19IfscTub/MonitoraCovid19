@@ -27,7 +27,6 @@ export default class ProfileLogin {
       if (!profile) {
         return null;
       }
-      console.log(this.password);
       const passwordIsValid = await bcrypt.compare(
         this.password,
         profile.password,
@@ -47,12 +46,10 @@ export default class ProfileLogin {
 
       if (profile.profileType.name === 'Professional') {
         // retornar o professional
-        console.log('entrei aqui');
         const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(
           profile,
         );
         const professional = await returnProfessionalByProfileService.run();
-        console.log(professional);
         return professional;
       }
 

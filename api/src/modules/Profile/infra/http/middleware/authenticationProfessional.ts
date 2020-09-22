@@ -20,16 +20,17 @@ const authenticationProfessional = (
         return response.status(403).send({ error: 'profile not exist' });
       }
 
-      if (profile.type.name === 'patient') {
+      if (profile.profileType.name === 'Patient') {
         return response.status(403).send({ error: 'accesses denied' });
       }
-      if (profile.type.name === 'professional') {
+      if (profile.profileType.name === 'Professional') {
         return next();
       }
       return response.status(403).send({ error: 'accesses denied' });
     })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .catch(err => {
+      console.log(err);
       response
         .status(500)
         .send({ error: 'error in processes profile, try again' });

@@ -4,10 +4,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  ManyToMany,
+  JoinTable, ManyToOne
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import ProfileType from './ProfileType';
+import Patient from '@modules/patient/infra/typeorm/entities/Patient';
 
 const encryptPassword = {
   from(value: string): string {
@@ -41,4 +43,5 @@ export default class Profile {
 
   @UpdateDateColumn()
   updateAt: Date;
+
 }
