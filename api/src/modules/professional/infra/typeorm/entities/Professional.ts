@@ -15,6 +15,6 @@ export default class Professional {
   profile: Profile;
 
   @ManyToMany(type => Patient, patients => patients.professionals)
-  @JoinTable()
+  @JoinTable({name: "patientsProfessional"})
   patients: Patient[];
 }
