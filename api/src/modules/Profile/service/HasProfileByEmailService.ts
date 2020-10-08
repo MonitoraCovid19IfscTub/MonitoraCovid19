@@ -14,7 +14,7 @@ export default class HasProfileByEmailService {
 	async run(): Promise<boolean> {
 
 		const profileEmail = await this.profileRepository.findProfileByEmail(this.email);
-    console.log(profileEmail);
+
 		if(!profileEmail) {
 			return false;
 		}

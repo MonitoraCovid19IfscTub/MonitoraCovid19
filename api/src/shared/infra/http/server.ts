@@ -12,7 +12,7 @@ server.use(express.json());
 
 server.use(router);
 
-server.listen(3000, () => {
+server.listen(5000, () => {
   // eslint-disable-next-line no-console
   console.log('ok');
 });

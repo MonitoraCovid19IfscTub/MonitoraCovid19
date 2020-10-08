@@ -21,7 +21,7 @@ export default class ProfileRepository implements IProfileRepository {
       .createQueryBuilder('profile')
       .addSelect('profile.password')
       .leftJoinAndSelect('profile.profileType', 'profileType')
-      .where('profile.email = :email', { email })
+      .where('profile.email ILIKE :email', { email })
       .getOne();
   }
   save(profile: Profile): Promise<Profile> {

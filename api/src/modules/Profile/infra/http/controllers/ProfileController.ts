@@ -14,6 +14,7 @@ export default class ProfileController {
   async login(request: RequestParams, response: Response): Promise<Response> {
     const { email, password } = request.body;
     try {
+
       /// criar um service que retorna Profile
       const profileLogin = new ProfileLogin(email, password);
       const user = await profileLogin.run();
