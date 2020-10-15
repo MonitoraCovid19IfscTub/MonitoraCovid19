@@ -6,7 +6,7 @@ import SetProfessionalForPatient from '@modules/Profile/service/SetProfessionalF
 import RequestParams from '@shared/@types/expressExtendTypes';
 import {Response } from 'express';
 import Patient from '../../typeorm/entities/Patient';
-
+import ReturnAccompaniedPatientsByProfessional from '../../../services/ReturnAccompaniedPatientsByProfessional';
 export default class PatientController {
   async  index(request: RequestParams, response: Response){
     try{
