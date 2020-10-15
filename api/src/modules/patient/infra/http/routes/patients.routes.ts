@@ -35,4 +35,6 @@ patientsRouter.post('/',celebrate({
 })
  ,patientController.create);
 
+ patientsRouter.get('/',patientController.index);
+
 export default patientsRouter;

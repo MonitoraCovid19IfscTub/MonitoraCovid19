@@ -5,9 +5,9 @@ import profileRouter from '@modules/Profile/infra/http/routes/profile.routes';
 
 const router = Router();
 
-router.use('/patient', patientsRouter);
-router.use('/measurement', measurementsRouter);
-router.use('/profile', profileRouter);
+router.use('/api/patient', patientsRouter);
+router.use('/api/measurement', measurementsRouter);
+router.use('/api/profile', profileRouter);
 
 
 export default router;

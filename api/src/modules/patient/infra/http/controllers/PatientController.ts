@@ -8,14 +8,34 @@ import {Response } from 'express';
 import Patient from '../../typeorm/entities/Patient';
 
 export default class PatientController {
+  async  index(request: RequestParams, response: Response){
+    try{
+      const professionalProfileId = request.profileId;
+
+      const profile = new Profile();
+      profile.id = professionalProfileId;
+
+      const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
+      const professional = await returnProfessionalByProfileService.run();
+      console.log(professional);
+
+      const returnAccompaniedPatientByProfessional = new ReturnAccompaniedPatientsByProfessional(professional);
+      const patients = returnAccompaniedPatientByProfessional.run();
+
+    }catch(err){
+      console.log(err);
+    }
+  }
   async create(request: RequestParams, response: Response) {
-      const data = request.body;
-      try{
-        const professionalProfileId = request.profileId;
-        const profile = new Profile();
-        profile.id = professionalProfileId;
-        const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
-        const professional = await returnProfessionalByProfileService.run();
+    const data = request.body;
+    try{
+      const professionalProfileId = request.profileId;
+
+      const profile = new Profile();
+      profile.id = professionalProfileId;
+
+      const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
+      const professional = await returnProfessionalByProfileService.run();
 
 
       const createANewPatientService = new CreateANewPatientService({professional,...data});
@@ -24,21 +44,11 @@ export default class PatientController {
         return response.status(400).send({error : "invalid data, please check the data and try again"});
 
       }
-
-     // const setProfessionalForPatient = new SetProfessionalForPatient(professional,patient);
-      /* E se der erro aqui */
-     // const success= await setProfessionalForPatient.run()
-    //  if(!success){
-  //      throw new Error("Error in Set Professional for patient");
-//}*/
-
-
-      console.log(patient);
       return response.send();
 
     }catch(err){
-      console.log(err);
       return response.status(500).send({error : err.message});
     }
   }
+
 }
