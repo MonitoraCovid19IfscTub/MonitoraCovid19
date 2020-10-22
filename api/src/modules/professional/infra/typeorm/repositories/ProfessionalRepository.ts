@@ -3,6 +3,7 @@ import Profile from '@modules/Profile/infra/typeorm/entities/Profile';
 import Professional from '../entities/Professional';
 import IProfessionalRepository from '@modules/professional/repositories/IProfessionalRepository';
 import Patient from '@modules/patient/infra/typeorm/entities/Patient';
+import Measurement from '@modules/measurements/infra/typeorm/entities/Measurement';
 
 export default class ProfessionalRepository implements IProfessionalRepository {
   private repository: Repository<Professional>;
@@ -26,10 +27,13 @@ export default class ProfessionalRepository implements IProfessionalRepository {
   save(professional: Professional): Promise<Professional> {
     return this.repository.save(professional);
   }
-  findPatientsRelations(professional: Professional){
-    return this.repository.createQueryBuilder()
-    .relation(Professional, "patients")
-    .of(professional) // you can use just post id as well
-    .loadMany();
+  async findPatientsRelations(professional: Professional){
+    const response =  this.repository.createQueryBuilder('professional')
+    .leftJoinAndSelect("professional.patients", "patient")
+    .leftJoinAndSelect('patient.measurements','measurements')
+    .where('professional.id = :id',{id: professional.id})
+    .getOne();
+
+    return (await response).patients;
   }
 }
