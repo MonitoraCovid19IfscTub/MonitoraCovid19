@@ -4,7 +4,7 @@ import StationIsActive from '@modules/station/services/StationIsActive';
 import VerifyPatientExist from '@modules/patient/services/VerifyPatientExist';
 
 export default class MeasurementControllers {
-  async create(requenst: Request, response: Response): Promise<Response> {
+  async create(request: Request, response: Response): Promise<Response> {
     const { patientId, stationId, measurement } = request.body;
 
     // identificar se a Estação  existe e se está ativo.
@@ -16,9 +16,9 @@ export default class MeasurementControllers {
         return response.status(400).send({ error: 'Station not Active' });
       }
 
-      // identificar se o patiente existe
-      const verifyPaitientExist = new VerifyPatientExist(patientId);
-      const patientExist = await verifyPaitientExist.run();
+      // identificar se o patient existe
+      const verifyPatientExist = new VerifyPatientExist(patientId);
+      const patientExist = await verifyPatientExist.run();
       if (!patientExist) {
         return response.status(400).send({ error: 'Patient not exist' });
       }
@@ -36,7 +36,7 @@ export default class MeasurementControllers {
 
       return response.status(201).send();
     } catch (err) {
-      return response.status(400).send({ err });
+      return response.status(400).send({ error: err.message });
     }
   }
 }
