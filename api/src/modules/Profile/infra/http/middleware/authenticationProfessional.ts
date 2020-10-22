@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { RequestParams } from '@shared/@types/expressExtendTypes';
+import  RequestParams  from '@shared/@types/expressExtendTypes';
 import IProfileRepository from '@modules/Profile/repositories/IProfileRepository';
 import ProfileRepository from '../../typeorm/repositories/ProfileRepository';
 

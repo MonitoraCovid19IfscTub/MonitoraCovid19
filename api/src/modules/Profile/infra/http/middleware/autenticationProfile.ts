@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { RequestParams } from '@shared/@types/expressExtendTypes';
+import RequestParams from '@shared/@types/expressExtendTypes';
 import { secret } from '@config/config.json';
 
 import { CodedParams } from '@modules/Profile/service/GenerateANewToken';

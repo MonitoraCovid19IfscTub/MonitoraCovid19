@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { RequestParams } from '@shared/@types/expressExtendTypes';
+import RequestParams from '@shared/@types/expressExtendTypes';
 import IProfileRepository from '@modules/Profile/repositories/IProfileRepository';
 import ProfileRepository from '../../typeorm/repositories/ProfileRepository';
 
@@ -20,11 +20,11 @@ const authenticationPatient = (
         return response.status(403).send({ error: 'profile not exist' });
       }
 
-      if (profile.type.name === 'professional') {
+      if (profile.profileType.name === 'professional') {
         return response.status(403).send({ error: 'accesses denied' });
       }
 
-      if (profile.type.name === 'patient') {
+      if (profile.profileType.name === 'patient') {
         return next();
       }
 

@@ -9,7 +9,7 @@ const patientsRouter = express.Router();
 const patientController = new PatientController();
 patientsRouter.use(errors());
 patientsRouter.use(authenticationProfile);
-patientsRouter.use(authenticationProfessional);
+
 patientsRouter.post('/',celebrate({
   [Segments.BODY]: Joi.object().keys({
     name : Joi.string().min(3).required(),
@@ -34,5 +34,8 @@ patientsRouter.post('/',celebrate({
   })
 })
  ,patientController.create);
+
+ patientsRouter.get('/',patientController.show);
+
 
 export default patientsRouter;

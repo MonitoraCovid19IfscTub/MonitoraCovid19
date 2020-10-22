@@ -1,3 +1,4 @@
+import Professional from '@modules/professional/infra/typeorm/entities/Professional';
 import Profile from '@modules/Profile/infra/typeorm/entities/Profile';
 import Patient from '../infra/typeorm/entities/Patient';
 

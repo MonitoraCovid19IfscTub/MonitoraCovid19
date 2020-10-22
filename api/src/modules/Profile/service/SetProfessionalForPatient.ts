@@ -11,7 +11,7 @@ export default class SetProfessionalForPatient{
 
   }
   async run():Promise<boolean>{
-
+    return true;
 
   }
 }
