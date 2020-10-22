@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import Patient from '@modules/patient/infra/typeorm/entities/Patient';
 import Station from '@modules/station/infra/typeorm/entities/Station';
+import MeasurementType from './MeasurementType';
 
 @Entity('measurements')
 export default class Measurement {
@@ -24,8 +25,8 @@ export default class Measurement {
   @ManyToOne(type => Patient, patientId => patientId.measurements, {})
   patient: Patient;
 
-  @Column()
-  typeId: number;
+  @ManyToOne(type => MeasurementType, measurementType => measurementType.id)
+  type: MeasurementType;
 
   @CreateDateColumn()
   createdAt: Date;

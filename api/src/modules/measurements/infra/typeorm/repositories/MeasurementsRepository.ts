@@ -2,6 +2,7 @@ import IMeasurementCreateDTO from '@modules/measurements/dtos/IMeasurementsCreat
 import IMeasurementsRepository from '@modules/measurements/repositories/IMeasurementsRepository';
 import { getRepository, Repository } from 'typeorm';
 import Measurement from '../entities/Measurement';
+import MeasurementType from '../entities/MeasurementType';
 
 export default class MeasurementsRepository implements IMeasurementsRepository {
   private repository: Repository<Measurement>;
@@ -18,13 +19,16 @@ export default class MeasurementsRepository implements IMeasurementsRepository {
     typeId,
   }: IMeasurementCreateDTO): Promise<Measurement> {
     const entityMeasurement = new Measurement();
+    const type = new MeasurementType();
+    type.id = typeId;
+
     Object.assign(entityMeasurement, {
       measurement: value,
       patient,
       registeredAt,
       station,
-      typeId,
     });
+    entityMeasurement.type = type;
 
     return this.repository.save(entityMeasurement);
   }
