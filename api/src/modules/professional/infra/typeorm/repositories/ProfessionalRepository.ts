@@ -30,7 +30,8 @@ export default class ProfessionalRepository implements IProfessionalRepository {
   async findPatientsRelations(professional: Professional){
     const response =  this.repository.createQueryBuilder('professional')
     .leftJoinAndSelect("professional.patients", "patient")
-    .leftJoinAndSelect('patient.measurements','measurements')
+    .leftJoinAndSelect('patient.measurements','measurement')
+    .leftJoinAndSelect('measurement.type','measurementType')
     .where('professional.id = :id',{id: professional.id})
     .getOne();
 
