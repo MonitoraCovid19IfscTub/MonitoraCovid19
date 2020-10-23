@@ -3,7 +3,7 @@ import PatientRepository from '../infra/typeorm/repositories/PatientRepository';
 import IPatientRepository from '../repositories/IPatientRepository';
 import Patient from '../infra/typeorm/entities/Patient';
 
-export default class ReturnPatientByIdService {
+export default class ReturnPatientMeasurementsAndProfessionalsById {
   private patientId: string;
 
   private repository: IPatientRepository;
@@ -15,6 +15,6 @@ export default class ReturnPatientByIdService {
   }
 
   async run(): Promise<Patient> {
-    return this.repository.findById(this.patientId);
+    return this.repository.findByIdAndReturnPatientMeasurementsAndProfessionals(this.patientId);
   }
 }

@@ -16,7 +16,7 @@ export default class PatientRepository implements IPatientRepository {
     return this.repository.save(data);
   }
 
-  findById(patientId: string): Promise<Patient> {
+  findByIdAndReturnPatientMeasurementsAndProfessionals(patientId: string): Promise<Patient> {
     return this.repository.createQueryBuilder('patient')
     .leftJoinAndSelect('patient.profile', 'profile')
     .leftJoinAndSelect('patient.measurements','measurement')

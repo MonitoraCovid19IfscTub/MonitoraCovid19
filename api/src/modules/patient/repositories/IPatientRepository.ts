@@ -4,6 +4,6 @@ import Patient from '../infra/typeorm/entities/Patient';
 
 export default interface IPatientRepository {
   save(data : Patient): Promise<Patient>
-  findById(patientId: string): Promise<Patient>;
+  findByIdAndReturnPatientMeasurementsAndProfessionals(patientId: string): Promise<Patient>;
   findByProfileAndReturnRelations(profile: Profile): Promise<Patient>;
 }

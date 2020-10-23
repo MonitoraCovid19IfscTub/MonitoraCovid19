@@ -6,6 +6,7 @@ import IPatientCreateDTO from "../dtos/IPatientCreateDTO";
 import Patient from "../infra/typeorm/entities/Patient";
 import PatientRepository from "../infra/typeorm/repositories/PatientRepository";
 import IPatientRepository from "../repositories/IPatientRepository";
+import crypto from 'crypto';
 
 
 
@@ -40,7 +41,8 @@ export default class CreateANewPatientService {
       const profile = new Profile();
 
       profile.email = this.patient.email;
-      profile.password = this.patient.password;
+
+      profile.password = crypto.randomBytes(20).toString('hex');
       profile.contact = this.patient.contact;
       profile.profileType = profileType;
 

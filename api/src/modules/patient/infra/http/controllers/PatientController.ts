@@ -5,8 +5,9 @@ import RequestParams from '@shared/@types/expressExtendTypes';
 import {Response } from 'express';
 import Patient from '../../typeorm/entities/Patient';
 import ReturnPatientByProfileService from '@modules/patient/services/ReturnPatientByProfileService';
-import ReturnPatientByIdService from '@modules/patient/services/ReturnPatientByIdService'
+import ReturnPatientMeasurementsAndProfessionalsById from '@modules/patient/services/ReturnPatientMeasurementsAndProfessionalsById'
 import patientsRouter from '../routes/patients.routes';
+import { send } from 'process';
 export default class PatientController {
 
   async create(request: RequestParams, response: Response) {
@@ -30,6 +31,11 @@ export default class PatientController {
         return response.status(400).send({error : "invalid data, please check the data and try again"});
 
       }
+
+      const sendEmailByPatient = new SendEmailByCreatedPatient(patient);
+      await sendEmailByPatient.run();
+
+
       return response.status(201).send();
 
     }catch(err){
@@ -53,7 +59,7 @@ export default class PatientController {
       if(!ṕatientId){
         return response.status(403).send({error: "no patientId provided"});
       }
-      const returnPatientById = new ReturnPatientByIdService(ṕatientId as string);
+      const returnPatientById = new ReturnPatientMeasurementsAndProfessionalsById(ṕatientId as string);
       const patient = await returnPatientById.run();
       if(!patient){
         return response.send({error:'patient not found '});
@@ -74,7 +80,7 @@ export default class PatientController {
      }
       return response.send(patient);
     }else{
-      const returnPatientById = new ReturnPatientByIdService(patientProfile.id);
+      const returnPatientById = new ReturnPatientMeasurementsAndProfessionalsById(patientProfile.id);
       const patient = await returnPatientById.run();
       if(patient){
         return response.send(patient);
