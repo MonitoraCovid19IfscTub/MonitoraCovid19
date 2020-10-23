@@ -32,4 +32,9 @@ export default class MeasurementsRepository implements IMeasurementsRepository {
 
     return this.repository.save(entityMeasurement);
   }
+  findManyByPatientId(patientId : string){
+    return this.repository.find({
+      where: {patient : patientId}
+    })
+  }
 }

@@ -1,11 +1,13 @@
 import express from 'express';
 import { celebrate, Joi, Segments, errors } from 'celebrate';
 import MeasurementControllers from '../../controllers/MeasuramentControllers';
+import measurementsAuthRouter from './measurements.auth.routes';
 
 const measurementsRouter = express.Router();
 const measurementControllers = new MeasurementControllers();
 
 measurementsRouter.use(errors());
+measurementsRouter.use(measurementsAuthRouter);
 measurementsRouter.post(
   '/',
   celebrate({

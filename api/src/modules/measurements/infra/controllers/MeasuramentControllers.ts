@@ -2,8 +2,65 @@ import { Request, Response } from 'express';
 import CreateANewMeasurementService from '@modules/measurements/services/CreateANewMeasurementService';
 import StationIsActive from '@modules/station/services/StationIsActive';
 import VerifyPatientExist from '@modules/patient/services/VerifyPatientExist';
+import RequestParams from '@shared/@types/expressExtendTypes';
+import Profile from '@modules/Profile/infra/typeorm/entities/Profile';
+import ReturnPatientByProfileService from '@modules/patient/services/ReturnPatientByProfileService';
+import ReturnMeasurementsForPatientId from '@modules/measurements/services/ReturnMeasurementsForPatientId';
+import ReturnProfessionalByProfileService from '@modules/professional/services/ReturnProfessionalByProfileService';
+import ReturnPatientMeasurementsAndProfessionalsById from '@modules/patient/services/ReturnPatientMeasurementsAndProfessionalsById';
 
 export default class MeasurementControllers {
+  async index(request: RequestParams, response : Response){
+    const profileId = request.profileId;
+    const ṕatientId = request.query.patientId;
+
+    const profile = new Profile();
+    profile.id = profileId;
+
+    const returnPatientByProfileService = new ReturnPatientByProfileService(profile);
+    const patientProfile = await returnPatientByProfileService.run();
+
+
+
+    if(!patientProfile){
+      if(!ṕatientId){
+        return response.status(403).send({error: "no patientId provided"});
+      }
+      const returnPatientByProfileService = new ReturnPatientMeasurementsAndProfessionalsById(ṕatientId as string);
+      const patient = await returnPatientByProfileService.run();
+      if(!patient){
+        return response.send({error:'patient not found '});
+      }
+
+      const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
+      const professional = await returnProfessionalByProfileService.run();
+      if(!professional){
+        return response.status(403).send({error: "acesses denied"});
+      }
+
+      const found =  patient.professionals.find(professionalPatient => professionalPatient.id == professional.id);
+
+      if(!found){
+        return response.status(403).send({error: 'you are not allowed to access this patient\'s data'})
+      }
+
+      const returnMeasurementsForPatientId = new ReturnMeasurementsForPatientId(ṕatientId as string);
+      const measurements = await returnMeasurementsForPatientId.run();
+      if(!measurements){
+        return response.send({error:'measurements not found '});
+      }
+
+      return response.send({patientID : patient.id,measurements});
+    }else{
+
+      const returnMeasurementsForPatientId = new ReturnMeasurementsForPatientId(patientProfile.id);
+      const measurements = await returnMeasurementsForPatientId.run();
+      if(!measurements){
+        return response.send({error:'measurements not found '});
+      }
+      return response.send({patientID : patientProfile.id,measurements});
+    }
+  }
   async create(request: Request, response: Response): Promise<Response> {
     const { patientId, stationId, measurement } = request.body;
 

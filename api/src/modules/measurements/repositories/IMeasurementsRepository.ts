@@ -4,4 +4,5 @@ import IMeasurementCreateDto from '../dtos/IMeasurementsCreateDTO';
 
 export default interface IMeasurementsRepository {
   create(data: IMeasurementCreateDto): Promise<Measurement>;
+  findManyByPatientId(patient : string): Promise<Measurement[]>;
 }
