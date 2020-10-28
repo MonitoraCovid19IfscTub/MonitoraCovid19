@@ -8,6 +8,7 @@ import ReturnPatientByProfileService from '@modules/patient/services/ReturnPatie
 import ReturnPatientMeasurementsAndProfessionalsById from '@modules/patient/services/ReturnPatientMeasurementsAndProfessionalsById'
 import patientsRouter from '../routes/patients.routes';
 import { send } from 'process';
+import SendEmailByCreatedPatient from '@modules/patient/services/SendEmailByCreatedPatient';
 export default class PatientController {
 
   async create(request: RequestParams, response: Response) {

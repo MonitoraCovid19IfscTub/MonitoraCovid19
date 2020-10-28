@@ -13,4 +13,10 @@ export default class SendEmailByCreatedPatient{
      this.sendEmail = getEmailService();
   }
 
+  run(){
+    return this.sendEmail.send(this.patient.profile.email,'src/emai',
+    {email : this.patient.profile.email,
+    password : this.patient.profile.password
+    });
+  }
 }

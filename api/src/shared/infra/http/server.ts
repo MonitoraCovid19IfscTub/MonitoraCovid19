@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import cors from 'cors';
+
 import express from 'express';
 
 import '../typeorm';
@@ -8,6 +10,7 @@ import router from './routes/routes';
 
 const server = express();
 
+server.use(cors());
 server.use(express.json());
 
 server.use(router);
