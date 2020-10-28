@@ -69,9 +69,9 @@ export default class MeasurementControllers {
       const stationIsActiveService = new StationIsActive(stationId);
       const stationIsActive = await stationIsActiveService.run();
 
-          if (!stationIsActive) {
+       /*   if (!stationIsActive) {
         return response.status(400).send({ error: 'Station not Active' });
-      }
+      }*/
 
       // identificar se o patient existe
       const verifyPatientExist = new VerifyPatientExist(patientId);
