@@ -63,7 +63,7 @@ export default class PatientController {
       const returnPatientById = new ReturnPatientMeasurementsAndProfessionalsById(ṕatientId as string);
       const patient = await returnPatientById.run();
       if(!patient){
-        return response.send({error:'patient not found '});
+        return response.status(404).send({error:'patient not found '});
       }
 
       const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
