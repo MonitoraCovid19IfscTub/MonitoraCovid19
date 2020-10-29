@@ -29,7 +29,7 @@ export default class MeasurementControllers {
       const returnPatientByProfileService = new ReturnPatientMeasurementsAndProfessionalsById(ṕatientId as string);
       const patient = await returnPatientByProfileService.run();
       if(!patient){
-        return response.send({error:'patient not found '});
+        return response.status(404).send({error:'patient not found '});
       }
 
       const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
@@ -47,7 +47,7 @@ export default class MeasurementControllers {
       const returnMeasurementsForPatientId = new ReturnMeasurementsForPatientId(ṕatientId as string);
       const measurements = await returnMeasurementsForPatientId.run();
       if(!measurements){
-        return response.send({error:'measurements not found '});
+        return response.status(404).send({error:'measurements not found '});
       }
 
       return response.send({patientID : patient.id,measurements});
