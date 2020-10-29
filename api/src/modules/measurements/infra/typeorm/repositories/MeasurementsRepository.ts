@@ -34,6 +34,7 @@ export default class MeasurementsRepository implements IMeasurementsRepository {
   }
   findManyByPatientId(patientId : string){
     return this.repository.find({
+      relations: ['type'],
       where: {patient : patientId}
     })
   }
