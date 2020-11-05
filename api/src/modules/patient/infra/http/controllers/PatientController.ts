@@ -22,7 +22,7 @@ export default class PatientController {
       const returnProfessionalByProfileService = new ReturnProfessionalByProfileService(profile);
       const professional = await returnProfessionalByProfileService.run();
       if(!professional){
-        response.status(403).send({error:'only professionals can register patients'});
+       return  response.status(403).send({error:'only professionals can register patients'});
       }
 
 
