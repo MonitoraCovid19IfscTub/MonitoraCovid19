@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev   -r tsconfig-paths/register --inspect  --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "start" :"node ./dist/shared/infra/http/server.js",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist"
   },
   "dependencies": {
     "celebrate": "^12.2.0",
@@ -36,6 +38,8 @@
     "prettier": "^2.0.5",
     "ts-node": "3.3.0",
     "ts-node-dev": "^1.0.0-pre.59",
+    "tsconfig-paths": "^3.9.0",
+    "tscpaths": "^0.0.9",
     "typescript": "3.3.3333"
   }
 }
